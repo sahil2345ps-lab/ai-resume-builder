@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '@/components/custom/Header'
 import { AtomIcon, Edit, Share2, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -35,10 +36,10 @@ function Home() {
               </p>
               
               <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a href="/dashboard" className="inline-flex justify-center items-center py-4 px-8 text-base font-semibold text-center text-white rounded-full bg-primary hover:bg-primary/90 focus:ring-4 focus:ring-primary-300 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5">
+                <Link to={'/dashboard'} className="inline-flex justify-center items-center py-4 px-8 text-base font-semibold text-center text-white rounded-full bg-primary hover:bg-primary/90 focus:ring-4 focus:ring-primary-300 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5">
                   Get Started for Free
                   <ArrowRight className="ml-2 -mr-1 w-5 h-5 animate-pulse" />
-                </a>
+                </Link>
               </div>
             </div>
           </section>
