@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@media print{
+    #no-print{
+        display: none;
+    }
+    #print-area{
+        display: block;
+    }
+    body{
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+}
+    @page{
+       size: auto;
+       margin: 0mm;
+
+    }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+
+.rsw-preview ul, .rsw-preview ol {
+    list-style-type: disc !important;
+    padding-left: 1.5rem !important;
+    margin-left: 10px !important;
+}
+
+.rsw-preview li {
+    margin-bottom: 5px;
+}
+
+
+
+
+
+
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    zoom: 100%; /* Back to full size */
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* This selects your main app container and forces it to fill the page */
+  #root, .app {
+    width: 100% !important;
+  }
+
+  /* This overrides Tailwind's container limits during print */
+  div {
+    box-shadow: none !important; /* Removes 3D shadows */
+    margin: 0 !important;        /* Removes external margins */
+    max-width: 100% !important;  /* Lets it stretch to the edge */
+  }
+}
