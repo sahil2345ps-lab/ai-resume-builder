@@ -15,7 +15,9 @@ function Header() {
       {isSignedIn?
         <div className= 'flex gap-2 items-center'>
           <Link to={'/dashboard'}>
-             <Button variant="outline">Dashboard</Button>
+             <Button className="bg-primary hover:bg-primary/90 text-white font-semibold py-2 px-6 rounded-lg transition-all shadow-md">
+              Dashboard
+              </Button>
           </Link>
           <UserButton/>  
         </div>:
