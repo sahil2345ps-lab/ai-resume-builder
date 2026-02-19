@@ -3,29 +3,43 @@ import AddResume from './components/AddResume'
 import { useUser } from '@clerk/clerk-react'
 import GlobalApi from './../../service/GlobalApi';
 import ResumeCardItem from './components/ResumeCardItem';
+import SkeletonCard from './../components/custom/SkeletonCard';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
 
-  const { user } = useUser();
+  const { user, isLoaded, isSignedIn } = useUser();
+  const navigate = useNavigate();
   const [resumeList, setResumeList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-   
-    if (user) {
+  
+  if (isLoaded) {
+    
+    if (!isSignedIn) {
+      navigate('/auth/sign-in');
+    } 
+    
+    else if (user?.primaryEmailAddress?.emailAddress) {
       GetResumesList();
     }
-  }, [user]);
-
-  const GetResumesList = () => {
-    GlobalApi.GetUserResumes(user?.primaryEmailAddress?.emailAddress)
-      .then(resp => {
-        console.log("Resumes fetched:", resp.data.data); 
-        setResumeList(resp.data.data);
-      })
-      .catch(error => {
-        console.error("Error fetching resumes:", error);
-      });
   }
+}, [user, isLoaded, isSignedIn]); 
+  const GetResumesList = () => {
+    setLoading(true); 
+    
+    GlobalApi.GetUserResumes(user?.primaryEmailAddress?.emailAddress)
+    .then(resp => {
+        console.log("Resumes fetched:", resp.data.data);
+        setResumeList(resp.data.data);
+        setLoading(false); 
+    })
+    .catch(error => {
+        console.error("Error fetching resumes:", error);
+        setLoading(false); 
+    });
+}
 
   return (
     <div className='p-10 md:px-20 lg:px-32'>
@@ -37,9 +51,17 @@ function Dashboard() {
         <AddResume />
 
         {/* Resume List */}
-        {resumeList.length > 0 && resumeList.map((resume, index) => (
-          <ResumeCardItem resume={resume} key={index} refreshData={GetResumesList}/>
-        ))}
+        {loading ? 
+  
+        [1, 2, 3, 4].map((item, index) => (
+        <SkeletonCard key={index} />
+        )) 
+        : 
+  
+        resumeList.map((resume, index) => (
+        <ResumeCardItem resume={resume} key={index} refreshData={GetResumesList}/>
+        ))
+        }
       </div>
     </div>
   )
